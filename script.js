@@ -145,7 +145,7 @@ function initxp() {
     var elem3 = $("progress2");
 elem2.style.width = game.stats.hp.div(game.stats.maxhp).mul(100).toNumber() + "%";
         if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 33)) elem2.innerHTML = toFixed(game.stats.hp) + "/" + toFixed(game.stats.maxhp) + " HP (" + toFixed(game.stats.hp.div(game.stats.maxhp).mul(100), 1) + "%)"
-else elem2.innerHTML = toFixed(game.hp)
+else elem2.innerHTML = toFixed(game.stats.hp)
 if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 50)) {elem2.style.backgroundColor = "#00EE00"; elem2.style.color = "#BBFFBB"}
 else if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 25)) {elem2.style.backgroundColor = "#EEEE00"; elem2.style.color = "#FFFFBB"}
 else {elem2.style.backgroundColor = "#EE0000"; elem2.style.color = "#FFBBBB"}
