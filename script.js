@@ -1,9 +1,9 @@
 function $(id) {return document.getElementById(id)};
 function c(id) {return document.getElementsByClassName(id)};
-function t(id) {return document.getElementsByTagName(id)}; // you can detect custom tags with this or just regular tags
+function t(id) {return document.getElementsByTagName(id)};
 
 let D = x => {
-  return new OmegaNum(x); //you f*cking know already, comedy sh*t
+  return new OmegaNum(x);
 }
 
 class Enemy {
@@ -137,7 +137,7 @@ const newstickers = [
 
 setInterval(() => {$("news").innerHTML = newstickers[Math.floor(Math.random()*newstickers.length)]}, 21337)
 var i = 0
-function initxp() {
+function initstats() {
     var elem = $("xpbar");
         elem.style.width = game.xp.div(game.xpreq).mul(100).toNumber() + "%";
         elem.innerHTML = "Lv" + game.level + "<br>" + toFixed(game.xp) + "/" + toFixed(game.xpreq) + "<br>(" + game.xp.div(game.xpreq).mul(100).floor().toNumber() + "%)"
@@ -146,8 +146,8 @@ function initxp() {
 elem2.style.width = game.stats.hp.div(game.stats.maxhp).mul(100).toNumber() + "%";
         if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 33)) elem2.innerHTML = toFixed(game.stats.hp) + "/" + toFixed(game.stats.maxhp) + " HP (" + toFixed(game.stats.hp.div(game.stats.maxhp).mul(100), 1) + "%)"
 else elem2.innerHTML = toFixed(game.stats.hp)
-if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 50)) {elem2.style.backgroundColor = "#00EE00"; elem2.style.color = "#BBFFBB"}
-else if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 25)) {elem2.style.backgroundColor = "#EEEE00"; elem2.style.color = "#FFFFBB"}
+if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 50)) {elem2.style.backgroundColor = "#10C322"; elem2.style.color = "#BBFFBB"}
+else if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 25)) {elem2.style.backgroundColor = "#D6D600"; elem2.style.color = "#FFFFBB"}
 else {elem2.style.backgroundColor = "#EE0000"; elem2.style.color = "#FFBBBB"}
   if (game.xp.gte(game.xpreq)) {
     game.xp = D(0);
@@ -163,7 +163,7 @@ function init() {
 load();
 Object.assign(regame,game);
 game = regame;
-  setInterval(initxp, 20);
+  setInterval(initstats, 20);
   setInterval(updateThings, 20);
   setInterval(save, 1000) //save() is in saving.js
   setInterval(fpstext, 1000)
