@@ -142,7 +142,8 @@ function initxp() {
         elem.style.width = game.xp.div(game.xpreq).mul(100).toNumber() + "%";
         elem.innerHTML = "Lv" + game.level + "<br>" + toFixed(game.xp) + "/" + toFixed(game.xpreq) + "<br>(" + game.xp.div(game.xpreq).mul(100).floor().toNumber() + "%)"
     var elem2 = $("hpbar");
-    var elem3 = $("progress2") elem2.style.width = game.stats.hp.div(game.stats.maxhp).mul(100).toNumber() + "%";
+    var elem3 = $("progress2") 
+elem2.style.width = game.stats.hp.div(game.stats.maxhp).mul(100).toNumber() + "%";
         if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 33)) elem2.innerHTML = toFixed(game.stats.hp) + "/" + toFixed(game.stats.maxhp) + " HP (" + toFixed(game.stats.hp.div(game.stats.maxhp).mul(100), 1) + "%)"
 else elem2.innerHTML = toFixed(game.hp)
 if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 50)) {elem2.style.backgroundColor = "#00EE00"; elem2.style.color = "#BBFFBB"}
