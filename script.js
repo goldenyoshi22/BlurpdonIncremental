@@ -2,33 +2,31 @@ function $(id) {return document.getElementById(id)};
 function c(id) {return document.getElementsByClassName(id)};
 function t(id) {return document.getElementsByTagName(id)};
 
+//omeganum crap
 let D = x => {
   return new OmegaNum(x);
 }
 
-class Enemy {
-  constructor() {
-  }
-}
+var ON = OmegaNum
 
 //notation
 function toFixed(num, dec = 2) {
   if (num.gte(1e6)) {
     let exponent = num.logBase(10).floor()
-    let mantissa = toFixed(num.div(OmegaNum.pow(10, exponent)), dec)
+    let mantissa = toFixed(num.div(ON.pow(10, exponent)), dec)
     
     return mantissa + "e" + exponent
   }
-  return OmegaNum.round(num.times(OmegaNum.pow(10, dec))).div(
-    OmegaNum.pow(10, dec)
-  ); //I totally didn't copy and paste this from shape incremental/taiko no incremental
+  return ON.round(num.times(ON.pow(10, dec))).div(
+    ON.pow(10, dec)
+  ); //i totally didn't copy and paste this from shape incremental/taiko no incremental
 }
 
 var lastLoop = new Date();
 var fps = 69
 
 const enemyNameArray = ["slime", "goblin", "mini mecha-don", "wolf", "ghost", "witch", "wizard", "mecha-don [BOSS]", "poisonous slime", "snake", "hypnodon plushie", "galaxy don plushie", "time don plushie", "mini mecha-army", "mecha-katsu [BOSS]", "easy demon", "medium demon", "hard demon", "insane demon", "extreme demon", "silent demon [BOSS]", "someone", "dark someone", "hypnotic someone", "electric someone", "time someone", "evil someone", "light someone [BOSS]", "magikarp", "pikachu", "hypno", "kaa",     "raichu", "mewtwo [BOSS]", "sonic.exe", "freddy", "bendy",   "smile dog", "jeff the killer", "slenderman [BOSS]", "crong god"]
-var ON = OmegaNum
+
 var game = {
   version: 1.3,
   level: D(1),
@@ -69,6 +67,8 @@ var game = {
     unlocked: false
   }
 } 
+
+// for wiping save
 var defaults = {
   game: { ...game },
   stats: { ...game.stats },
@@ -79,6 +79,7 @@ var defaults = {
   thuamaseeds: { ...game.thuamaseeds },
   scaredness: { ...game.scaredness }
 }
+
 function getNewSave() {
 game = defaults.game
 game.enemy = defaults.enemy
@@ -90,6 +91,8 @@ game.thuamaseeds = defaults.thuamaseeds
 game.scaredness = defaults.scaredness
 location.reload(true)
 }
+
+//news
 const newstickers = [
   "Have you heard the legend of the Hypno-don plushies? They are plushies that literally hypnotize you. Be careful with them, or else bad things might ha- obey... obey... get more plushies... @_@", 
   "Welcome to the news ticker, today the news is that your mom died.", 
@@ -136,13 +139,14 @@ const newstickers = [
 ]
 
 setInterval(() => {$("news").innerHTML = newstickers[Math.floor(Math.random()*newstickers.length)]}, 21337)
+
+//for both bars
 var i = 0
 function initstats() {
     var elem = $("xpbar");
         elem.style.width = game.xp.div(game.xpreq).mul(100).toNumber() + "%";
         elem.innerHTML = "Lv" + game.level + "<br>" + toFixed(game.xp) + "/" + toFixed(game.xpreq) + "<br>(" + game.xp.div(game.xpreq).mul(100).floor().toNumber() + "%)"
     var elem2 = $("hpbar");
-    var elem3 = $("progress2");
 elem2.style.width = game.stats.hp.div(game.stats.maxhp).mul(100).toNumber() + "%";
         if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 33)) elem2.innerHTML = toFixed(game.stats.hp) + "/" + toFixed(game.stats.maxhp) + " HP (" + toFixed(game.stats.hp.div(game.stats.maxhp).mul(100), 1) + "%)"
 else elem2.innerHTML = toFixed(game.stats.hp)
@@ -158,6 +162,7 @@ else {elem2.style.backgroundColor = "#EE0000"; elem2.style.color = "#FFBBBB"}
     game.stats.def = game.stats.def.mul(1.666).round();
   }
       }
+
 function init() {
   var regame=game;
 load();
@@ -185,6 +190,7 @@ function gainxp() {
   game.xp = game.xp.add(game.xpgain)
 }
 
+//main updater
 function updateThings() {
   $("stats").innerHTML = "ATK: " + toFixed(game.stats.atk) + "<br>DEF: " + toFixed(game.stats.def) + "<br>GOLD: " + toFixed(game.stats.gold)
   $("xpbutton").innerHTML = "Gain " + toFixed(game.xpgain) + " XP"
@@ -201,14 +207,6 @@ function updateThings() {
   if (game.enemy.currentarea >= 5) game.scaredness.unlocked = true
   if (game.scaredness.unlocked == true) $("scarednessbutton").style.display = "inline"
   else $("scarednessbutton").style.display = "none"
-  
-  /*
-    game.enemy.enemymaxhp = [D(5), D(20), D(100), D(150), D(666), D(444), D(650), D(1500), D(800), D(1000), D(1234), D(1337), D(1666), D(100), D(3333), D(2000), D(3000), D(4000), D(5000), D(6666), D(13337), D(7777), D(8888), D(10000), D(11111), D(12345), D(13337), D(22222), D(15000), D(17500), D(22222), D(25000), D(30000), D(100000), D(66666), D(77777), D(100000), D(133337), D(222222), D(666666), D(999999999)]
-    game.enemy.enemyatk = [D(2), D(10), D(15), D(25), D(6), D(44), D(69), D(444), D(300), D(333), D(369), D(400), D(420), D(15), D(666), D(444), D(555), D(666), D(888), D(1111), D(1337), D(1234), D(1337), D(1777), D(2222), D(3333), D(5000), D(11111), D(10), D(3500), D(4444), D(5555), D(6666), D(13337), D(6666), D(7777), D(10000), D(13337), D(22222), D(66666), D(999999999)]
-    game.enemy.enemydef = [D(2), D(8), D(20), D(22), D(6), D(44), D(70), D(500), D(250), D(300), D(333), D(350), D(369), D(20), D(690), D(333), D(444), D(500), D(555), D(666), D(1337), D(800), D(900), D(1000), D(1111), D(1234), D(1666), D(2222), D(10), D(1111), D(1337), D(1420), D(1690), D(4444), D(1500), D(1690), D(1888), D(2000), D(1337), D(6666), D(999999999)]
-    game.enemy.enemygold = [D(3), D(15), D(50), D(123), D(6), D(1000), D(1500), D(15000), D(1234), D(1500), D(2222), D(3333), D(4444), D(50), D(66666), D(444), D(666), D(888), D(1337), D(2222), D(133337), D(2500), D(3333), D(3669), D(4444), D(5000), D(6666), D(222222), D(10), D(7777), D(8888), D(10000), D(12345), D(444444), D(6666), D(10000), D(22222), D(33333), D(44444), D(666666), D(999999999)]
-    game.enemy.maxamount = [25, 20, 10, 15, 6, 10, 11, 1, 10, 8, 9, 10, 6, 40, 1, 20, 15, 12, 10, 7, 1, 10, 9, 8, 7, 6, 6, 1, 25, 10, 10, 10, 10, 1, 6, 6, 6, 6, 6, 1, 999]
-    game.enemy.areas = [8, 15, 21, 28, 34, 40, 999]*/
     
   if (game.enemy.enemyhp[game.enemy.currentenemy].gt(game.enemy.enemymaxhp[game.enemy.currentenemy])) {
     game.enemy.enemyhp[game.enemy.currentenemy] = game.enemy.enemymaxhp[game.enemy.currentenemy]
@@ -234,6 +232,7 @@ function fpstext() {
   $("fpstext").innerHTML = Math.floor(fps) + " FPS"
 }
 
+// self explanatory
 function attack() {
   game.enemy.enemyhp[game.enemy.currentenemy] = game.enemy.enemyhp[game.enemy.currentenemy].sub(game.stats.atk.div(game.enemy.enemydef[game.enemy.currentenemy]).ceil())
   game.stats.hp = game.stats.hp.sub(game.enemy.enemyatk[game.enemy.currentenemy].div(game.stats.def).round())
@@ -264,13 +263,14 @@ function upgradexp() {
   }
 }
 
+//totally not stolen from ad -1
 function switchTab(tab) {
   Array.from(c("tabs")).forEach(e => {e.style.display = "none"}); // i'm the code condenser
   $(tab).style.display = "block";
 }
 
 function switchSubtab(tab) {
-  let subtabs = ["thuamaseedsSubtab", "thuamaplantsSubtab", "thuamaseedsInfoSubtab"];
+  let subtabs = ["areaSubtab", "shopSubtab", "thuamaseedsSubtab", "thuamaplantsSubtab", "thuamaseedsInfoSubtab"];
 
   for (let i = 0; i < subtabs.length; i++) {
     $(subtabs[i]).style.display = "none";
