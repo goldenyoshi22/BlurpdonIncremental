@@ -13,10 +13,10 @@
   </head>  
   <body>
     <div id="news">Fun fact: this ticker always appears the first time when you visit this page</div>  
-    <button onclick="switchTab('blurpDon')" class="button1 tooltip">Blurpdon 
+    <button onclick="switchTab('blurpDon'); switchSubtab('areaSubtab')" class="button1 tooltip">Blurpdon 
           <span class="tooltiptext">This is where you can level up Blurpdon and attack enemies.</span></button>
     <button onclick="switchTab('settings')" class="button1">Settings</button>
-    <button id="thuamaseedsbutton" onclick="switchTab('thuamaseedstab')" class="button3 tooltip">Thuamaseeds <span class="tooltiptext">Magical seeds that divide your XP requirement.</span></button>
+    <button id="thuamaseedsbutton" onclick="switchTab('thuamaseedstab'); switchSubtab('thuamaseedsSubtab')" class="button3 tooltip">Thuamaseeds <span class="tooltiptext">Magical seeds that divide your XP requirement.</span></button>
     <button id="scarednessbutton" onclick="switchTab('scarednesstab')" class="button4 tooltip">Scaredness <span class="tooltiptext">Those area 6 creatures are scaring you...</span></button>
     <button onclick="switchTab('debug')" class="button1">Debug</button>
     <div id="blurpDon" class="tabs">
@@ -89,7 +89,7 @@
       <button class="button3 centereddown" onclick="gainplant()">Grow a thuamaplant for 42 bought thuamaseeds.</button>
       </div>
     <div id="thuamaseedsInfoSubtab">
-      These unlocked at area 2. They help you level up faster. They divide the XP requirement to level up by log<sub>5</sub>(thuamaseeds). They also give off thuamaseed energy. With enough energy, 
+      These unlocked at area 3. They help you level up faster. They divide the XP requirement to level up by log<sub>5</sub>(thuamaseeds). They also give off thuamaseed energy. With enough energy, 
       you can sacrifice a seed, and divide the XP upgrade cost by 2. Thuamaplants cost 42 *bought* thuamaseeds. They make thuamaseeds for you, and each thuamaplant gives you 3 thuamaseeds per minute.
       But, when you gain a thuamaplant, the thuamaseed cost acts like you got 10 more *bought* thuamaseeds than you actually have.<br><br>
     </div>
