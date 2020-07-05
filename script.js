@@ -54,6 +54,8 @@ var game = {
   xpreq: D(12),
   xpgain: D(1),
   upgcost: D(25),
+  upgcost2: D(420),
+  upgcost3: D(420),
   autobought: [false, false, false],
   thuamaseeds: {
     seeds: D(0),
@@ -117,7 +119,7 @@ const newstickers = [
   "Once upon a time, there was a guy named johnathan the bigtime gamer. He sucked at taiko when he first played it, but he has fc'd 2 10 stars now.",
   "Stop playing this stupidity lol",
   "It has been told that the blypnodons are good at making you smile. They're so cute you can't (usually) stare at them for 10 seconds without smiling. This could be bad, as what if they are hypnotizing you without you knowing?",
-  "I'm tired again... uh... why is there a hypnodon plush... 'Go to sleep...' wha... zzz...zzzzzzzzz...",
+  "I'm tired again... uh... why is there a hypnodon plush... 'Go to sleep...' wha... zzz...zzzzzzzzz...NO WAKE THE F*CK U- no, go to sleep...hehehe...NO!!!",
   "I've seen some weird things before, and that blurple drum looking guy? What even is that??",
   "ew wuantum ripoff #3 -Yahtzee Master",
   "go commit smile mkey -basically everyone in the WAID server on like may 21 2020",
@@ -163,17 +165,19 @@ function init() {
 load();
 Object.assign(regame,game);
 game = regame;
-  setInterval(initstats, 20);
-  setInterval(updateThings, 20);
+  setInterval(initstats, 50);
+  setInterval(updateThings, 50);
   setInterval(save, 1000) //save() is in saving.js
   setInterval(fpstext, 1000)
   if (game.autobought[0] == true) {setInterval(gainxp, 20)
   $("auto").innerHTML = "Automatically gain XP 50 times /sec. [Bought!]"}
   if (game.autobought[1] == true) {setInterval(attack, 20)
 $("auto2").innerHTML = "Automatically attack 50 times /sec. [Bought!]"}
+  if (game.autobought[2] == true) {setInterval(heal, 50)
+$("auto3").innerHTML = "Automatically heal 1% of your max HP /sec. [Bought!]"}
   
   // resets enemies if version clashes
-  if (defaults.game.version != game.version) game.enemy = {...defaults.enemy}; game.autobought = [false, false, false]
+  if (defaults.game.version != game.version) game.enemy = {...defaults.enemy}; game.autobought = [false, false, false]; game.upgcost = D(25); game.upgcost2 = D(420); game.upgcost3 = D(420); game.thuamaseeds = {...defaults.thuamaseeds};
 }
 function updateEnemyText() {
   game.enemy.enemies.forEach(e => {e.updateEnemyText()})
@@ -190,6 +194,8 @@ function updateThings() {
   $("xpbutton").innerHTML = "Gain " + toFixed(game.xpgain) + " XP"
   $("enemytext").innerHTML = "(Area " + (game.enemy.currentarea + 1) + ") You are fighting a(n) " + enemyNameArray[game.enemy.currentenemy] + " with " + toFixed(game.enemy.enemyhp[game.enemy.currentenemy]) + " HP, " + toFixed(game.enemy.enemyatk[game.enemy.currentenemy]) + " ATK, and " + toFixed(game.enemy.enemydef[game.enemy.currentenemy]) + " DEF." + " (" + game.enemy.enemyamount[game.enemy.currentenemy] + " left.)"
   $("upgradexp").innerHTML = "Upgrade XP gain by x4 for " + toFixed(game.upgcost) + " gold."
+  $("upgradeatk").innerHTML = "Upgrade ATK by x2 for " + toFixed(game.upgcost2) + " gold."
+  $("upgradedef").innerHTML = "Upgrade DEF by x1.5 for " + toFixed(game.upgcost3) + " gold."
   $("thuamaseedtext").innerHTML = "<big>You have <big class='thuamacolor'>" + toFixed(game.thuamaseeds.seeds) + "</big>+<big class='thuamacolor'>" + toFixed(game.thuamaseeds.plantseeds) + "</big> thuamaseeds, dividing XP requirement by <big class='thuamacolor'>" + toFixed(game.thuamaseeds.seeds.plus(game.thuamaseeds.plantseeds).plus(2).logBase(2), 3) + "</big> and producing <big class='thuamacolor'>" + toFixed(game.thuamaseeds.seeds.plus(game.thuamaseeds.plantseeds).div(5)) + "</big> thuamaseed energy per second.</big>"
   $("thuamaseedbutton").innerHTML = "Gain a thuamaseed for " + toFixed(game.thuamaseeds.xpreq) + " XP."
   $("thuamaseedenergytext").innerHTML = "You have <big class='thuamacolor'>" + toFixed(game.thuamaseeds.energy) + "</big> thuamaseed energy, dividing XP needed for thuamaseeds by <big class='thuamacolor'>" + toFixed(game.thuamaseeds.energy.plus(5).logBase(5), 3) + "</big>."
@@ -201,14 +207,6 @@ function updateThings() {
   if (game.enemy.currentarea >= 5) game.scaredness.unlocked = true
   if (game.scaredness.unlocked == true) $("scarednessbutton").style.display = "inline"
   else $("scarednessbutton").style.display = "none"
-  
-  /*
-    game.enemy.enemymaxhp = [D(5), D(20), D(100), D(150), D(666), D(444), D(650), D(1500), D(800), D(1000), D(1234), D(1337), D(1666), D(100), D(3333), D(2000), D(3000), D(4000), D(5000), D(6666), D(13337), D(7777), D(8888), D(10000), D(11111), D(12345), D(13337), D(22222), D(15000), D(17500), D(22222), D(25000), D(30000), D(100000), D(66666), D(77777), D(100000), D(133337), D(222222), D(666666), D(999999999)]
-    game.enemy.enemyatk = [D(2), D(10), D(15), D(25), D(6), D(44), D(69), D(444), D(300), D(333), D(369), D(400), D(420), D(15), D(666), D(444), D(555), D(666), D(888), D(1111), D(1337), D(1234), D(1337), D(1777), D(2222), D(3333), D(5000), D(11111), D(10), D(3500), D(4444), D(5555), D(6666), D(13337), D(6666), D(7777), D(10000), D(13337), D(22222), D(66666), D(999999999)]
-    game.enemy.enemydef = [D(2), D(8), D(20), D(22), D(6), D(44), D(70), D(500), D(250), D(300), D(333), D(350), D(369), D(20), D(690), D(333), D(444), D(500), D(555), D(666), D(1337), D(800), D(900), D(1000), D(1111), D(1234), D(1666), D(2222), D(10), D(1111), D(1337), D(1420), D(1690), D(4444), D(1500), D(1690), D(1888), D(2000), D(1337), D(6666), D(999999999)]
-    game.enemy.enemygold = [D(3), D(15), D(50), D(123), D(6), D(1000), D(1500), D(15000), D(1234), D(1500), D(2222), D(3333), D(4444), D(50), D(66666), D(444), D(666), D(888), D(1337), D(2222), D(133337), D(2500), D(3333), D(3669), D(4444), D(5000), D(6666), D(222222), D(10), D(7777), D(8888), D(10000), D(12345), D(444444), D(6666), D(10000), D(22222), D(33333), D(44444), D(666666), D(999999999)]
-    game.enemy.maxamount = [25, 20, 10, 15, 6, 10, 11, 1, 10, 8, 9, 10, 6, 40, 1, 20, 15, 12, 10, 7, 1, 10, 9, 8, 7, 6, 6, 1, 25, 10, 10, 10, 10, 1, 6, 6, 6, 6, 6, 1, 999]
-    game.enemy.areas = [8, 15, 21, 28, 34, 40, 999]*/
     
   if (game.enemy.enemyhp[game.enemy.currentenemy].gt(game.enemy.enemymaxhp[game.enemy.currentenemy])) {
     game.enemy.enemyhp[game.enemy.currentenemy] = game.enemy.enemymaxhp[game.enemy.currentenemy]
@@ -264,6 +262,21 @@ function upgradexp() {
   }
 }
 
+function upgradeatk() {
+  if (game.stats.gold.gte(game.upgcost2)) {
+    game.stats.gold = game.stats.gold.minus(game.upgcost3)
+    game.upgcost2 = game.upgcost2.mul(5).round()
+    game.stats.atk = game.stats.atk.mul(2)
+  }
+}
+function upgradedef() {
+  if (game.stats.gold.gte(game.upgcost3)) {
+    game.stats.gold = game.stats.gold.minus(game.upgcost3)
+    game.upgcost3 = game.upgcost3.mul(6.9420).round()
+    game.stats.def = game.stats.def.mul(1.5)
+  }
+}
+
 function switchTab(tab) {
   Array.from(c("tabs")).forEach(e => {e.style.display = "none"}); // i'm the code condenser
   $(tab).style.display = "block";
@@ -285,10 +298,12 @@ switchSubtab('areaSubtab')
 function buyauto(n, cost) {
   if (game.stats.gold.gte(cost) && game.autobought[n] == false) {
     if (n == 0) $("auto").innerHTML = "Automatically gain XP 50 times /sec. [Bought!]"
-    else $("auto2").innerHTML = "Automatically attack 50 times /sec. [Bought!]"
+    else if (n == 1) $("auto2").innerHTML = "Automatically attack 50 times /sec. [Bought!]"
+	else $("auto3").innerHTML = "Automatically heal 1% of your max HP /sec. [Bought!]"
     game.autobought[n] = true
     if(n == 0) setInterval(gainxp, 20)
-    else setInterval(attack, 20)
+    else if (n == 1) setInterval(attack, 20)
+    else setInterval(heal, 50)
   }
 }
 
@@ -323,3 +338,13 @@ function gainplant() {
    game.thuamaseeds.plants = game.thuamaseeds.plants.add(1)
   }
 }
+
+function heal() {
+	if (game.stats.hp.lt(game.stats.maxhp)) game.stats.hp = game.stats.hp.add(game.stats.maxhp.div(2000)).floor()
+	else game.stats.hp = game.stats.maxhp
+}
+
+
+
+
+
