@@ -71,6 +71,6 @@ function importSave(text) {
   $("auto").innerHTML = "Automatically gain XP 50 times /sec. [Bought!]"}
   if (game.autobought[1] == true) {setInterval(attack, 20)
 $("auto2").innerHTML = "Automatically attack 50 times /sec. [Bought!]"}
-  if (game.autobought[2] == true) {setInterval(heal, 20)
+  if (game.autobought[2] == true) {setInterval(heal, 50)
 $("auto3").innerHTML = "Automatically heal 1% of your max HP /sec. [Bought!]"}
 }
