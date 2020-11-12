@@ -34,7 +34,7 @@ function isDecimal(x) {
     } else {
         return false;
     }
-} // lol just use instanceof its much better
+}
 
 
 var savegame;

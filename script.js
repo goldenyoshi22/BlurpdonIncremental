@@ -264,7 +264,7 @@ function upgradexp() {
 
 function upgradeatk() {
   if (game.stats.gold.gte(game.upgcost2)) {
-    game.stats.gold = game.stats.gold.minus(game.upgcost3)
+    game.stats.gold = game.stats.gold.minus(game.upgcost2)
     game.upgcost2 = game.upgcost2.mul(5).round()
     game.stats.atk = game.stats.atk.mul(2)
   }
