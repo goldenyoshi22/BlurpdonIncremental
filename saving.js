@@ -36,7 +36,6 @@ function isDecimal(x) {
     }
 }
 
-
 var savegame;
 
 function save() {
@@ -56,6 +55,7 @@ function wipeSave() {
   save();
   load();
 }
+
 
 function exportSave() {
   return btoa(JSON.stringify(game));

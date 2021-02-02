@@ -148,9 +148,12 @@ function initstats() {
 elem2.style.width = game.stats.hp.div(game.stats.maxhp).mul(100).toNumber() + "%";
         if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 33)) elem2.innerHTML = toFixed(game.stats.hp) + "/" + toFixed(game.stats.maxhp) + " HP (" + toFixed(game.stats.hp.div(game.stats.maxhp).mul(100), 1) + "%)"
 else elem2.innerHTML = toFixed(game.stats.hp)
-if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 50)) {elem2.style.backgroundColor = "#10C322"; elem2.style.color = "#BBFFBB"}
-else if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 25)) {elem2.style.backgroundColor = "#D6D600"; elem2.style.color = "#FFFFBB"}
-else {elem2.style.backgroundColor = "#EE0000"; elem2.style.color = "#FFBBBB"}
+//if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 50)) {elem2.style.backgroundColor = "#10C322"; elem2.style.color = "#BBFFBB"}
+//else if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 25)) {elem2.style.backgroundColor = "#D6D600"; elem2.style.color = "#FFFFBB"}
+//else {elem2.style.backgroundColor = "#EE0000"; elem2.style.color = "#FFBBBB"}
+if ((game.stats.hp.div(game.stats.maxhp).mul(100).floor().toNumber() > 0)) {elem2.style.backgroundColor = "hsl(" + (percentcalcthing(120)) + ", 90%, 44%)"; elem2.style.color = "hsl(" + (percentcalcthing(120)) + ", 90%, 85%)"; }
+
+//elem2.style.backgroundColor = "rgb(255, " + game.stats.hp.div(game.stats.maxhp).mul(255).floor().toNumber() + ", 0)"; elem2.style.color = "rgb(255, 255, 255)"
   if (game.xp.gte(game.xpreq)) {
     game.xp = D(0);
     game.level = game.level.add(1);
@@ -160,11 +163,14 @@ else {elem2.style.backgroundColor = "#EE0000"; elem2.style.color = "#FFBBBB"}
     game.stats.def = game.stats.def.mul(1.666).round();
   }
       }
+	  
+function percentcalcthing(a = 100, b = true) {
+	return b ? game.stats.hp.div(game.stats.maxhp).mul(a).floor().toNumber() : game.stats.hp.div(game.stats.maxhp).mul(a).floor()
+}
+	  
 function init() {
   var regame=game;
 load();
-Object.assign(regame,game);
-game = regame;
   setInterval(initstats, 50);
   setInterval(updateThings, 50);
   setInterval(save, 1000) //save() is in saving.js
@@ -177,7 +183,7 @@ $("auto2").innerHTML = "Automatically attack 50 times /sec. [Bought!]"}
 $("auto3").innerHTML = "Automatically heal 1% of your max HP /sec. [Bought!]"}
   
   // resets enemies if version clashes
-  if (defaults.game.version != game.version) game.enemy = {...defaults.enemy}; game.autobought = [false, false, false]; game.upgcost = D(25); game.upgcost2 = D(420); game.upgcost3 = D(420); game.thuamaseeds = {...defaults.thuamaseeds};
+  if (defaults.game.version != game.version) {game.enemy = {...defaults.enemy}; game.autobought = [false, false, false]; game.upgcost = D(25); game.upgcost2 = D(420); game.upgcost3 = D(420); game.thuamaseeds = {...defaults.thuamaseeds}};
 }
 function updateEnemyText() {
   game.enemy.enemies.forEach(e => {e.updateEnemyText()})
